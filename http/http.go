@@ -3,69 +3,47 @@ package http
 import (
 	"booker/models"
 	"database/sql"
-	"html/template"
-	"io/ioutil"
 	"log"
 	"net/http"
-	"strings"
 
-	_ "github.com/mattn/go-sqlite3"
+	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
 )
 
-type httpServer struct {
-	templates map[string]*template.Template
-	mux       *http.ServeMux
-	db        *sql.DB
+type server struct {
+	router *chi.Mux
+	db     *sql.DB
 }
 
-func NewServer() *httpServer {
-	s := httpServer{
-		templates: make(map[string]*template.Template),
-		mux:       http.NewServeMux(),
-		db:        nil,
+func NewServer() *server {
+	s := server{
+		router: chi.NewRouter(),
+		db:     models.ConnectToDatabase(),
 	}
-	s.loadTemplates()
 	s.registerHandlers()
-	s.connectDatabase()
 	return &s
 }
 
-func (s *httpServer) Run(addr string) {
+func (s *server) Run(addr string) {
 	log.Println("Starting server on " + addr)
-	log.Fatal(http.ListenAndServe(addr, s.mux))
+	log.Fatal(http.ListenAndServe(addr, s.router))
 }
 
-func (s *httpServer) loadTemplates() {
-	// Loads all .html files in templatesDir as templates
-	const templatesDir = "web/templates/"
+func (s *server) registerHandlers() {
+	r := s.router
 
-	files, err := ioutil.ReadDir(templatesDir)
-	if err != nil {
-		log.Fatal(err)
-	}
-	for _, file := range files {
-		filename := file.Name()
-		if strings.HasSuffix(filename, ".html") && filename != "layout.html" {
-			s.templates[filename] = template.Must(
-				template.ParseFiles(templatesDir+"layout.html", templatesDir+filename))
-		}
-	}
-}
+	r.Use(s.readUser)
+	r.Use(middleware.Logger)
 
-func (s *httpServer) renderTemplate(w http.ResponseWriter, filename string, data interface{}) {
-	t, ok := s.templates[filename]
-	if !ok {
-		log.Fatal("template '" + filename + "' not found")
-	}
-	t.Execute(w, data)
-}
+	r.Get("/", s.indexView)
+	r.Get("/booked/", s.bookedView)
+	r.Get("/login/", s.loginView)
+	r.Get("/logout/", s.logoutHandler)
 
-func (s *httpServer) connectDatabase() {
-	var err error
-	s.db, err = sql.Open("sqlite3", "booker.db")
-	if err != nil {
-		log.Fatal(err)
-	}
+	r.Post("/login/", s.loginHandler)
+	r.Post("/book/{dateId:[0-9]+}/", s.bookHandler)
+	r.Post("/unbook/{dateId:[0-9]+}/", s.unbookHandler)
 
-	models.InitTables(s.db)
+	fs := http.FileServer(http.Dir("web/static/"))
+	r.Handle("/static/*", http.StripPrefix("/static/", fs))
 }

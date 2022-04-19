@@ -1,15 +1,15 @@
 {{ define "title" }} Booker {{ end }}
 
 {{ define "main" }}
-<h3>Available dates:</h3>
+<h3>Booked dates:</h3>
 <ul>
 {{ range . }}
   <li class="date-listed">
     <div class="date-element">
     {{ .StartTime.Format "2-01 15:04" }} - {{ .EndTime.Format "15:04" }} 
     </div>
-    <form action="/book/{{ .Id }}/" method="post">
-      <input class="date-element" type="submit" value="Book">
+    <form action="/unbook/{{ .Id }}/" method="post">
+      <input class="date-element" type="submit" value="Unbook">
     </form>
   </li>
 {{ end }}

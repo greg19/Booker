@@ -1,3 +1,62 @@
+html, body {
+	height: 100%;
+}
+
 body {
-	background-color: #a7e8e0;
+	background-color: #f2bbf0;
+	display: flex;
+	flex-direction: column;
+	margin: 0;
+}
+
+.content {
+	margin: 10px;
+}
+
+nav {
+	height: 30px;
+	flex: none;
+	background-color: #761f87;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+nav a {
+	padding: 10px;
+	color: white;
+	text-decoration: none;
+}
+
+nav .align-left {
+	display: flex;
+	justify-content: flex-start;
+}
+
+nav .align-right {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.date-listed {
+	margin-top: 5px;
+	display: flex;
+	justify-contest: flex-start;
+	align-items: center;	
+}
+
+.date-element {
+	margin-right: 10px;
+}
+
+input[type=text], input[type=password] {
+    width: 100%;
+}
+
+.login-box input[type=submit] {
+	margin-top: 5px;
+}
+
+.login-box {
+	width: 800px;
 }
