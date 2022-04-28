@@ -15,10 +15,10 @@ type server struct {
 	db     *sql.DB
 }
 
-func NewServer() *server {
+func NewServer(dbfilename string) *server {
 	s := server{
 		router: chi.NewRouter(),
-		db:     models.ConnectToDatabase(),
+		db:     models.ConnectToDatabase(dbfilename),
 	}
 	s.registerHandlers()
 	return &s
@@ -38,11 +38,14 @@ func (s *server) registerHandlers() {
 	r.Get("/", s.indexView)
 	r.Get("/booked/", s.bookedView)
 	r.Get("/login/", s.loginView)
-	r.Get("/logout/", s.logoutHandler)
+	r.Get("/add-date/", s.addDateView)
+	r.Get("/assigned/", s.assignedView)
 
 	r.Post("/login/", s.loginHandler)
+	r.Post("/logout/", s.logoutHandler)
 	r.Post("/book/{dateId:[0-9]+}/", s.bookHandler)
 	r.Post("/unbook/{dateId:[0-9]+}/", s.unbookHandler)
+	r.Post("/add-date/", s.addDateHandler)
 
 	fs := http.FileServer(http.Dir("web/static/"))
 	r.Handle("/static/*", http.StripPrefix("/static/", fs))

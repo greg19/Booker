@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	http.NewServer().Run(":8080")
+	http.NewServer("booker.db").Run(":8080")
 }

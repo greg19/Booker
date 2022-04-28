@@ -10,23 +10,31 @@
 			<nav>
 				<div class="left-align">
 					<a href="/">Booker</a>
-				{{ if and .User .User.IsEmployee }}
-					<a href="/add-date/">add dates</a>
-				{{ end }}
+					{{ if and .User .User.IsEmployee }}
+						<a href="/assigned/">assigned dates</a>
+						<a href="/add-date/">add date</a>
+					{{ end }}
 				</div>
 				<div class="right-align">
-				{{ if not .User }}
-					<a href="/login/">Sign in</a>
-				{{ else }}
-					<a href="/booked/">{{ .User.Name }}</a>
-					<a href="/logout/">Logout</a>
-				{{ end }}
+					{{ if not .User }}
+						<a href="/login/">Sign in</a>
+					{{ else }}
+						<a href="/booked/">{{ .User.Name }}</a>
+						<form action="/logout/" method="post">
+							<input type="submit" value="Logout">
+						</form>
+					{{ end }}
 				</div>
 			</nav>
 		</header>
 		<div class="content">
 			<main>
-			{{ template "main" .Data }}
+				{{ if .Error }}
+			  	<div class="error-box">
+			  		{{ .Error }}
+			  	</div>
+				{{ end }}
+				{{ template "main" .Data }}
 			</main>
 		</div>
 	</body>

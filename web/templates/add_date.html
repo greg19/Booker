@@ -1,0 +1,23 @@
+{{ define "title" }} Booker - Add date {{ end }}
+
+{{ define "main" }}
+<div>
+  <form action="/add-date/" method="POST" id="add-date-form">
+    <label>start time:</label>
+    <input type="datetime-local" name="start-time">
+    <label>end time:</label>
+    <input type="datetime-local" name="end-time">
+    {{ if . }}
+      <label>assign to:</label>
+      <select name="employee">
+        {{ range .emps }} 
+          <option {{ if eq $.userId .Id }} selected {{ end }} value="{{ .Id }}">
+            {{ .Name }}
+          </option>
+        {{ end }}
+      </select>
+    {{ end }}
+    <input type="submit" value="Add">
+  </form> 
+</div>
+{{ end }}

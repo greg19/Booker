@@ -22,11 +22,22 @@ nav {
 	align-items: center;
 }
 
-nav a {
+nav a, nav input[type=submit] {
 	padding: 10px;
 	color: white;
 	text-decoration: none;
 }
+
+nav input[type=submit] {
+	background: none!important;
+	border: none;
+	font-size: medium;
+}
+
+nav form {
+	display: inline;
+}
+
 
 nav .align-left {
 	display: flex;
@@ -53,10 +64,20 @@ input[type=text], input[type=password] {
     width: 100%;
 }
 
+main {
+	width: 800px;
+}
+
 .login-box input[type=submit] {
 	margin-top: 5px;
 }
 
-.login-box {
-	width: 800px;
+.error-box {
+	color: #D8000C;
+	background-color: #FFBABA;	
+	border: 1px solid;
+	padding: 3px;
+	width: 100%;
+	margin: 0px 0px 5px 0px;
+	font-size: small;
 }

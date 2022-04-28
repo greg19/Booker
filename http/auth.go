@@ -11,15 +11,16 @@ import (
 )
 
 func (s *server) loginHandler(w http.ResponseWriter, r *http.Request) {
-	err := r.ParseForm()
-	if err != nil || !r.Form.Has("username") || !r.Form.Has("password") {
+	if !verifyForm(r, "username", "password") {
 		renderError(w, r, http.StatusBadRequest)
 		return
 	}
 
 	u, err := models.GetUserByUsername(s.db, r.Form.Get("username"))
+
 	if err != nil || u.Password != r.Form.Get("password") {
-		renderError(w, r, http.StatusBadRequest)
+		addError(w, r, http.StatusBadRequest, "invalid username or password")
+		renderTemplate(w, r, "login.html", nil)
 		return
 	}
 

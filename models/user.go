@@ -35,7 +35,8 @@ func (u *User) IsEmployee() bool {
 }
 
 func (u *User) IsCustomer() bool {
-	return u.UserType == UserTypeCustomer // or maybe return true?
+	return true
+	// or maybe return u.UserType == UserTypeCustomer?
 }
 
 func userFromRow(row scannable) (*User, error) {
@@ -72,4 +73,15 @@ func CreateUser(
 ) error {
 	_, err := db.Exec(sqlUserCreate, name, username, password, userType)
 	return err
+}
+
+const sqlUserByType = `
+SELECT * FROM users WHERE userType <= ?`
+
+func GetUsersByType(db *sql.DB, userType int) ([]*User, error) {
+	rows, err := db.Query(sqlUserByType, userType)
+	if err != nil {
+		return nil, err
+	}
+	return readFromRows(rows, userFromRow)
 }

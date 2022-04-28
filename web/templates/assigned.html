@@ -1,16 +1,16 @@
 {{ define "title" }} Booker {{ end }}
 
 {{ define "main" }}
-  <h3>Available dates:</h3>
+  <h3>All assigned dates:</h3>
   <ul>
     {{ range . }}
       <li class="date-listed">
         <div class="date-element">
           {{ .AssignedToName }}: {{ .StartTime.Format "2-01 15:04" }} - {{ .EndTime.Format "15:04" }} 
+          {{ if ne .BookedBy -1 }}
+            is booked by {{ .BookedByName }}
+          {{ end }}
         </div>
-        <form action="/book/{{ .Id }}/" method="post">
-          <input class="date-element" type="submit" value="Book">
-        </form>
       </li>
     {{ end }}
   </ul>
