@@ -176,6 +176,44 @@ func (s *server) addDateHandler(w http.ResponseWriter, r *http.Request) {
 	s.addDateView(w, r)
 }
 
+func (s *server) addUserView(w http.ResponseWriter, r *http.Request) {
+	user := getUser(r)
+	if user == nil || !user.IsAdmin() {
+		renderError(w, r, http.StatusForbidden)
+	} else {
+		renderTemplate(w, r, "add_user.html", nil)
+	}
+}
+
+func (s *server) addUserHandler(w http.ResponseWriter, r *http.Request) {
+	user := getUser(r)
+	if user == nil || !user.IsAdmin() {
+		renderError(w, r, http.StatusForbidden)
+		return
+	}
+
+	r.ParseForm()
+
+	var err error
+	var userType int
+	userType, err = strconv.Atoi(r.Form.Get("type"));
+	if err != nil {
+		renderError(w, r, http.StatusBadRequest)
+		return
+	}
+
+	err = models.CreateUser(s.db, r.Form.Get("name"), r.Form.Get("username"), r.Form.Get("password"), userType)
+	if err != nil {
+		log.Println(err);
+		renderError(w, r, http.StatusBadRequest)
+		return
+	}
+
+	log.Println("User added");
+
+	s.addUserView(w, r)
+}
+
 func (s *server) assignedView(w http.ResponseWriter, r *http.Request) {
 	user := getUser(r)
 	if user == nil || !user.IsEmployee() {

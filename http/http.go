@@ -39,6 +39,7 @@ func (s *server) registerHandlers() {
 	r.Get("/booked/", s.bookedView)
 	r.Get("/login/", s.loginView)
 	r.Get("/add-date/", s.addDateView)
+	r.Get("/add-user/", s.addUserView)
 	r.Get("/assigned/", s.assignedView)
 
 	r.Post("/login/", s.loginHandler)
@@ -46,6 +47,7 @@ func (s *server) registerHandlers() {
 	r.Post("/book/{dateId:[0-9]+}/", s.bookHandler)
 	r.Post("/unbook/{dateId:[0-9]+}/", s.unbookHandler)
 	r.Post("/add-date/", s.addDateHandler)
+	r.Post("/add-user/", s.addUserHandler)
 
 	fs := http.FileServer(http.Dir("web/static/"))
 	r.Handle("/static/*", http.StripPrefix("/static/", fs))
