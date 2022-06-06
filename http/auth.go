@@ -18,7 +18,11 @@ func (s *server) loginHandler(w http.ResponseWriter, r *http.Request) {
 
 	u, err := models.GetUserByUsername(s.db, r.Form.Get("username"))
 
-	if err != nil || u.Password != r.Form.Get("password") {
+	if err != nil {
+		renderError(w, r, http.StatusInternalServerError)
+		log.Println(err)
+		return
+	} else if u.Password != r.Form.Get("password") {
 		addError(w, r, http.StatusBadRequest, "invalid username or password")
 		renderTemplate(w, r, "login.html", nil)
 		return
@@ -78,7 +82,7 @@ func (s *server) readUser(next http.Handler) http.Handler {
 			sessionToken := c.Value
 			session, err := models.GetSessionByToken(s.db, sessionToken)
 			if err != nil {
-				user = nil
+				renderError(w, r, http.StatusInternalServerError)
 			} else if session.IsExpired() {
 				user = nil
 				models.DeleteSession(s.db, sessionToken)

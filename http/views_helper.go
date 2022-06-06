@@ -36,7 +36,12 @@ func readErrorMessage(r *http.Request) interface{} {
 }
 
 func getUser(r *http.Request) *models.User {
-	return r.Context().Value("user").(*models.User)
+	val := r.Context().Value("user")
+	if val != nil {
+		return val.(*models.User)
+	} else {
+		return nil
+	}
 }
 
 func renderTemplate(w http.ResponseWriter, r *http.Request, filename string, data interface{}) {
@@ -45,7 +50,8 @@ func renderTemplate(w http.ResponseWriter, r *http.Request, filename string, dat
 		path.Join(templatesDir, filename),
 	)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
+		return
 	}
 
 	err = t.Execute(w, templateContext{
@@ -54,7 +60,7 @@ func renderTemplate(w http.ResponseWriter, r *http.Request, filename string, dat
 		Data:  data,
 	})
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 }
 

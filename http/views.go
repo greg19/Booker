@@ -21,7 +21,7 @@ func (s *server) indexView(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *server) bookedView(w http.ResponseWriter, r *http.Request) {
-	user := r.Context().Value("user").(*models.User)
+	user := getUser(r)
 	if user == nil {
 		renderError(w, r, http.StatusForbidden)
 		return
@@ -173,7 +173,7 @@ func (s *server) addDateHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	s.addDateView(w, r)
+	http.Redirect(w, r, "/add-date/", http.StatusFound)
 }
 
 func (s *server) addUserView(w http.ResponseWriter, r *http.Request) {

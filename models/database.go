@@ -21,6 +21,12 @@ func ConnectToDatabase(dbfilename string) *sql.DB {
 	return db
 }
 
+type dbtype interface {
+	Exec(string, ...interface{}) (sql.Result, error)	
+	Query(string, ...interface{}) (*sql.Rows, error)
+	QueryRow(string, ...interface{}) *sql.Row
+}
+
 func CreateNewTables(db *sql.DB) {
 	tables := []string{
 		sqlDateTable,

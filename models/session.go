@@ -51,6 +51,6 @@ const sqlSessionDelete = `
 DELETE FROM sessions WHERE token = ?`
 
 func DeleteSession(db *sql.DB, token string) error {
-	_, err := db.Exec(sqlSessionCreate, token)
+	_, err := db.Exec(sqlSessionDelete, token)
 	return err
 }
