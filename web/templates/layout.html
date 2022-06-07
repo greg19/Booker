@@ -14,6 +14,9 @@
 						<a href="/assigned/">assigned dates</a>
 						<a href="/add-date/">add date</a>
 					{{ end }}
+                    {{ if and .User .User.IsAdmin  }}
+                        <a href="/add-user/">add user</a>
+                    {{ end }}
 				</div>
 				<div class="right-align">
 					{{ if not .User }}
