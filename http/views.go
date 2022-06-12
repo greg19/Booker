@@ -212,6 +212,40 @@ func (s *server) addUserHandler(w http.ResponseWriter, r *http.Request) {
 	log.Println("User added");
 
 	s.addUserView(w, r)
+    http.Redirect(w, r, "/", http.StatusFound)
+}
+
+func (s *server) registerView(w http.ResponseWriter, r *http.Request) {
+	user := getUser(r)
+	if user != nil {
+		renderError(w, r, http.StatusForbidden)
+	} else {
+		renderTemplate(w, r, "register.html", nil)
+	}
+}
+
+func (s *server) registerHandler(w http.ResponseWriter, r *http.Request) {
+	user := getUser(r)
+	if user != nil {
+		renderError(w, r, http.StatusForbidden)
+		return
+	}
+
+	r.ParseForm()
+
+	var err error
+
+	err = models.CreateUser(s.db, r.Form.Get("name"), r.Form.Get("username"), r.Form.Get("password"), models.UserTypeCustomer)
+	if err != nil {
+		log.Println(err);
+		renderError(w, r, http.StatusBadRequest)
+		return
+	}
+
+	log.Println("User registered");
+
+	// s.addUserView(w, r)
+    http.Redirect(w, r, "/login/", http.StatusFound)
 }
 
 func (s *server) assignedView(w http.ResponseWriter, r *http.Request) {

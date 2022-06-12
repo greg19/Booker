@@ -69,7 +69,7 @@ main {
 	width: 800px;
 }
 
-.login-box input[type=submit] {
+.login-box .register-box input[type=submit] {
 	margin-top: 5px;
 }
 

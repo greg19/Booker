@@ -38,11 +38,13 @@ func (s *server) registerHandlers() {
 	r.Get("/", s.indexView)
 	r.Get("/booked/", s.bookedView)
 	r.Get("/login/", s.loginView)
+    r.Get("/register/", s.registerView)
 	r.Get("/add-date/", s.addDateView)
 	r.Get("/add-user/", s.addUserView)
 	r.Get("/assigned/", s.assignedView)
 
 	r.Post("/login/", s.loginHandler)
+    r.Post("/register/", s.registerHandler)
 	r.Post("/logout/", s.logoutHandler)
 	r.Post("/book/{dateId:[0-9]+}/", s.bookHandler)
 	r.Post("/unbook/{dateId:[0-9]+}/", s.unbookHandler)

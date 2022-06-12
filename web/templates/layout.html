@@ -21,6 +21,7 @@
 				<div class="right-align">
 					{{ if not .User }}
 						<a href="/login/">Sign in</a>
+						<a href="/register/">Register</a>
 					{{ else }}
 						<a href="/booked/">{{ .User.Name }}</a>
 						<form action="/logout/" method="post">

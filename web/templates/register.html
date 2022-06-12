@@ -1,0 +1,15 @@
+{{ define "title" }} Booker - Sign in {{ end }}
+
+{{ define "main" }}
+<div class="register-box">
+	<form action="/register/" method="POST">
+	  <label>Username:</label>
+	  <input type="text" name="username">
+	  <label>Password:</label><br>
+	  <input type="password" name="password">
+      <label>Name:</label>
+      <input type="text" name="name">
+	  <input type="submit" value="Submit">
+	</form> 
+</div>
+{{ end }}
