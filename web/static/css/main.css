@@ -15,7 +15,7 @@ body {
 }
 
 nav {
-	height: 30px;
+	height: 50px;
 	flex: none;
 	background-color: #761f87;
 	display: flex;
@@ -24,7 +24,7 @@ nav {
 }
 
 nav a, nav input[type=submit] {
-	padding: 10px;
+	padding: 15px;
 	color: white;
 	text-decoration: none;
 }
@@ -50,10 +50,14 @@ nav .align-right {
 	justify-content: flex-end;
 }
 
+nav a:hover {
+	background-color:  #4d004d;
+  }
+
 .date-listed {
 	margin-top: 5px;
 	display: flex;
-	justify-contest: flex-start;
+	justify-content: flex-start;
 	align-items: center;	
 }
 
@@ -66,7 +70,9 @@ input[type=text], input[type=password] {
 }
 
 main {
-	width: 800px;
+	display: flex; 
+	justify-content: center;
+	justify-items: center;
 }
 
 .login-box .register-box input[type=submit] {
