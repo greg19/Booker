@@ -170,6 +170,11 @@ main {
   .ic3 {
 	margin-top: 10px;
   }
+
+  .ic4 {
+	margin-top: 10px;
+	margin-right: 30px; 
+  }
   
   .input {
 	background-color: #303245;

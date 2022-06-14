@@ -1,18 +1,24 @@
 {{ define "title" }} Booker {{ end }}
 
 {{ define "main" }}
+<div class="booking-box">
+
   <ul>
     <h3>All assigned dates:</h3>
 
     {{ range . }}
       <li class="date-listed">
+        <div class="input-container ic4">
         <div class="date-element">
           {{ .AssignedToName }}: {{ .StartTime.Format "2-01 15:04" }} - {{ .EndTime.Format "15:04" }} 
           {{ if ne .BookedBy -1 }}
             is booked by {{ .BookedByName }}
           {{ end }}
         </div>
+      </div>
+
       </li>
     {{ end }}
   </ul>
+</div>
 {{ end }}
