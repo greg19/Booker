@@ -23,7 +23,7 @@
 						<a href="/login/">Sign in</a>
 						<a href="/register/">Register</a>
 					{{ else }}
-						<a href="/booked/">{{ .User.Name }}</a>
+						<a href="/booked/"> Booked by {{ .User.Name }}</a>
 						<form action="/logout/" method="post">
 							<input type="submit" value="Logout">
 						</form>

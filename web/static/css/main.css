@@ -254,10 +254,10 @@ main {
 	cursor: pointer;
 	height: 50px;
 	margin-top: 10px; 
-	margin-left: 20px;
+	margin-left: 18px;
 	outline: 0;
 	text-align: center;
-	width: 50px;
+	width: 55px; 
   }
   
   .submit:active {
