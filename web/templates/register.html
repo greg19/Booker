@@ -3,13 +3,24 @@
 {{ define "main" }}
 <div class="register-box">
 	<form action="/register/" method="POST">
-	  <label>Username:</label>
-	  <input type="text" name="username">
-	  <label>Password:</label><br>
-	  <input type="password" name="password">
-      <label>Name:</label>
-      <input type="text" name="name">
-	  <input type="submit" value="Submit">
+	<div class="title">Welcome</div>
+	<div class="subtitle">Let's create your account!</div>
+	<div class="input-container ic1">
+		<input id="username" class="input" name="username" type="text" placeholder=" " />
+		<div class="cut"></div>
+		<label for="username" class="placeholder">Username</label>
+	</div>
+	<div class="input-container ic2">
+		<input id="password" class="input" name="password" type="password" placeholder=" " />
+		<div class="cut"></div>
+		<label for="password" class="placeholder">Password</label>
+	</div>
+	<div class="input-container ic2">
+		<input id="name" class="input" name="name" type="text" placeholder=" " />
+		<div class="cut"></div>
+		<label for="name" class="placeholder">Name</label>
+	</div>
+	<button type="text" class="submit">submit</button>
 	</form> 
 </div>
 {{ end }}
