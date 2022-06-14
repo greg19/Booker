@@ -1,45 +1,51 @@
 <!DOCTYPE html>
 <html lang="pl">
-	<head>
-		<meta charset="UTF-8">
-		<title>{{ template "title" . }}</title>
-		<link rel="stylesheet" href="/static/css/main.css">
-	</head>
-	<body>
-		<header>
-			<nav>
-				<div class="left-align">
-					<a href="/">Booker</a>
-					{{ if and .User .User.IsEmployee }}
-						<a href="/assigned/">assigned dates</a>
-						<a href="/add-date/">add date</a>
-					{{ end }}
-                    {{ if and .User .User.IsAdmin  }}
-                        <a href="/add-user/">add user</a>
-                    {{ end }}
-				</div>
-				<div class="right-align">
-					{{ if not .User }}
-						<a href="/login/">Sign in</a>
-						<a href="/register/">Register</a>
-					{{ else }}
-						<a href="/booked/"> Booked by {{ .User.Name }}</a>
-						<form action="/logout/" method="post">
-							<input type="submit" value="Logout">
-						</form>
-					{{ end }}
-				</div>
-			</nav>
-		</header>
-		<div class="content">
-			<main>
-				{{ if .Error }}
-			  	<div class="error-box">
-			  		{{ .Error }}
-			  	</div>
+
+<head>
+	<meta charset="UTF-8">
+	<title>{{ template "title" . }}</title>
+	<link rel="stylesheet" href="/static/css/main.css">
+</head>
+
+<body>
+	<header>
+		<nav>
+			<div class="left-align">
+				<a href="/">Booker</a>
+				{{ if and .User .User.IsEmployee }}
+				<a href="/assigned/">assigned dates</a>
+				<a href="/add-date/">add date</a>
 				{{ end }}
-				{{ template "main" .Data }}
-			</main>
+				{{ if and .User .User.IsAdmin }}
+				<a href="/add-user/">add user</a>
+				{{ end }}
+			</div>
+			<div class="right-align">
+				{{ if not .User }}
+				<a href="/login/">Sign in</a>
+				<a href="/register/">Register</a>
+				{{ else }}
+				<a href="/booked/"> Booked by {{ .User.Name }}</a>
+				<form action="/logout/" method="post">
+					<input type="submit" value="Logout">
+				</form>
+				{{ end }}
+			</div>
+		</nav>
+	</header>
+	<div class="content">
+		<main>
+			<div class="row">
+			{{ if .Error }}
+			<div class="error-box">
+				{{ .Error }}
+			</div>
+			{{ end }}
+			{{ template "main" .Data }}
 		</div>
-	</body>
+
+		</main>
+	</div>
+</body>
+
 </html>
