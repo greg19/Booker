@@ -85,6 +85,8 @@ main {
 	display: flex; 
 	justify-content: center;
 	justify-items: center;
+	flex-direction: row;	
+
 }
 
 .login-box .register-box input[type=submit] {
