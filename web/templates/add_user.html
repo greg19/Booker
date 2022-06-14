@@ -2,6 +2,7 @@
 
 {{ define "main" }}
 <div>
+  <div class="add-date">
   <form action="/add-user/" method="POST" id="add-user-form">
     <label>Name:</label>
     <input type="text" name="name">
@@ -16,5 +17,6 @@
     </select>
     <input type="submit" value="Add">
   </form>
+</div>
 </div>
 {{ end }}

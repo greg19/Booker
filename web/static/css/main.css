@@ -159,6 +159,13 @@ main {
 	width: 100%;
   }
   
+  .add-date{
+	color: #111; 
+  }
+  
+  .add-user {
+	color: #111; 
+  }
   .ic1 {
 	margin-top: 40px;
   }

@@ -2,6 +2,7 @@
 
 {{ define "main" }}
 <div>
+  <div class="add-date">
   <form action="/add-date/" method="POST" id="add-date-form">
     <label>start time:</label>
     <input type="datetime-local" name="start-time">
@@ -19,5 +20,6 @@
     {{ end }}
     <input type="submit" value="Add">
   </form> 
+</div>
 </div>
 {{ end }}
